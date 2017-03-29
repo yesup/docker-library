@@ -1,0 +1,25 @@
+FROM yesuprelease/tensorflow-serving-devel
+
+LABEL maintainer "Jeff Ye <jeffye@yesup.com>"
+
+WORKDIR /
+
+RUN mkdir app
+
+RUN git clone --recurse-submodules https://github.com/tensorflow/serving.git
+
+WORKDIR /serving
+
+RUN git checkout tags/0.5.1
+
+COPY configure_answers /serving/tensorflow/
+
+WORKDIR /serving/tensorflow
+
+RUN ./configure < configure_answers
+
+WORKDIR /serving
+
+RUN bazel --output_user_root=/app -c opt --copt=-mavx --copt=-msse4.2 --copt=-mfpmath=both tensorflow_serving/...
+
+CMD ["/bin/bash"]
