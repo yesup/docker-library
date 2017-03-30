@@ -1,0 +1,25 @@
+FROM yesuprelease/tensorflow-serving-devel
+
+LABEL maintainer "Jeff Ye <jeffye@yesup.com>"
+
+WORKDIR /
+
+RUN git clone https://github.com/tensorflow/tensorflow
+
+WORKDIR /tensorflow
+
+RUN git checkout r1.1
+
+COPY configure_answer /tensorflow/
+
+RUN ./configure < configure_answer
+
+RUN bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-msse4.1 --copt=-msse4.2 --copt=-mfma --copt=-mfpmath=both //tensorflow/tools/pip_package:build_pip_package
+
+RUN ./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+
+RUN pip install /tmp/tensorflow_pkg/*.whl
+
+RUN pip install pandas
+
+CMD ["/bin/bash"]
