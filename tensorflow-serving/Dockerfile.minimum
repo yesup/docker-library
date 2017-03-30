@@ -18,6 +18,6 @@ RUN ./configure < configure_answer
 
 WORKDIR /serving
 
-RUN bazel build -c opt --copt=-mavx --copt=-msse4.2 --copt=-mfpmath=both tensorflow_serving/...
+RUN bazel build -c opt --copt=-mavx --copt=-msse4.1 --copt=-msse4.2 --copt=-mfpmath=both tensorflow_serving/...
 
 CMD ["/bin/bash"]
