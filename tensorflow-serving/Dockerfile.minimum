@@ -8,7 +8,8 @@ RUN git clone --recurse-submodules https://github.com/tensorflow/serving.git
 
 WORKDIR /serving
 
-RUN git checkout tags/0.5.1
+# uncomment and modify this for a special release build
+# RUN git checkout tags/0.5.1
 
 COPY configure_answer /serving/tensorflow/
 
