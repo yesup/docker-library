@@ -12,16 +12,15 @@ We do not provide no optimize built, since it is available from pip
 
 ## Build maximum and release
 ```
-docker build -t yesuprelease/tensorflow:1.1 -f Dockerfile.maximum .
-docker tag yesuprelease/tensorflow:1.1 yesuprelease/tensorflow:latest
-docker push yesuprelease/tensorflow:1.1
+docker build -t yesuprelease/tensorflow:latest -f Dockerfile.maximum .
 docker push yesuprelease/tensorflow:latest
 ```
 
 ## Build minimum and release
 ```
-docker build -t yesuprelease/tensorflow:1.1-minimum -f Dockerfile.minimum .
-docker tag yesuprelease/tensorflow:1.1-minimum yesuprelease/tensorflow:latest-minimum
-docker push yesuprelease/tensorflow:1.1-minimum
+docker build -t yesuprelease/tensorflow:latest-minimum -f Dockerfile.minimum .
 docker push yesuprelease/tensorflow:latest-minimum
 ```
+
+## For release version
+Edit and uncomment the git checkout command in Docker file to build the special release, and tag it with the correct version
